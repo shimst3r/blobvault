@@ -22,3 +22,6 @@ class BlobTestCase(TestCase):
         decrypted_content = blob.decrypt_content(fernet_key=key)
 
         self.assertEqual(content, decrypted_content)
+
+
+# TODO: Add tests for download and upload views.
