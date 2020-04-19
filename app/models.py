@@ -13,7 +13,6 @@ class Blob(models.Model):
 
     @classmethod
     def encrypt_content(cls, content, mimetype):
-        # TODO: Introduce mimetypes.guess_type and store it in additional model field.
         encoded_content = base64.b64encode(content)
 
         key = fernet.Fernet.generate_key()
