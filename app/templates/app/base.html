@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-8">
+          <div class="jumbotron">
+            <h1>Blob Vault</h1>
+            <h2>A Secure Way of Sharing Almost Anything</h2>
+
+            <p>
+              Choose and upload almost any content you like, it will be
+              automatically encrypted using the
+              <a href="https://github.com/fernet/spec/">Fernet algorithm</a>.
+            </p>
+
+            <p>
+              The file will be stored on disk and the corresponding download URL
+              will be shared via the provided email address.
+            </p>
+
+            <p>
+              Make sure to copy the decryption key. It won't be stored on our
+              servers. Once it's gone, it's gone. Apply the key by appending
+              <tt>?key=$keyvalue</tt> to the download URL.
+            </p>
+
+            <p>
+              <strong>One last thing:</strong>
+              Each blob can be downloaded once and only once. After the content
+              is decrypted, it will be purged from our database.
+            </p>
+          </div>
+          {% if messages %} {% for message in messages %}
+          <div class="alert alert-danger" role="alert">
+            {{ message }}
+          </div>
+          {% endfor %} {% endif %}
+          <div label="content">
+            {% block content %} {% endblock %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
