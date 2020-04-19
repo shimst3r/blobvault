@@ -30,7 +30,7 @@
 
                     <p>
                         Make sure to copy the encryption key. It won't be stored on our servers. Once it's gone, it's
-                        gone.
+                        gone. Apply the key by appending <tt>?key=$keyvalue</tt> to the download URL.
                     </p>
 
                 </div>
@@ -42,10 +42,18 @@
                 </ul>
                 {% endif %}
 
+                {% load crispy_forms_tags %}
                 <form action="{% url 'app:upload-file' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form }}
-                    <input type="submit" value="Submit">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form.file|as_crispy_field }}
+                        </div>
+                        <div class="col-6">
+                            {{ form.email|as_crispy_field }}
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Encrypt">
                 </form>
             </div>
         </div>
