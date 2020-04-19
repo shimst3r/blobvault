@@ -12,8 +12,10 @@ def download_file(request, blob_uuid):
     key = request.GET.get("key", b"")
 
     content = blob.decrypt_content(fernet_key=key)
+    blob.delete()
 
-    return HttpResponse(content, content_type="application/pdf")
+    # TODO: Get mimetype from Blob model
+    return HttpResponse(content, content_type="application/octet-stream")
 
 
 def upload_file(request):
@@ -22,7 +24,9 @@ def upload_file(request):
         if form.is_valid():
             blob, key = Blob.encrypt_content(content=form.cleaned_data["file"].read())
             blob.save()
-            messages.add_message(request, messages.INFO, f"key: {key.decode('utf-8')}")
+
+            message = f"Decryption key is {key.decode('utf-8')}️"
+            messages.add_message(request, messages.INFO, message)
             messages.add_message(request, messages.INFO, f"uuid: {blob.pk}")
 
             return HttpResponseRedirect(reverse("app:upload-file"))
