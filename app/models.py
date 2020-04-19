@@ -8,10 +8,11 @@ from django.db import models
 class Blob(models.Model):
     content = models.BinaryField()
     creation_date = models.DateTimeField(auto_now_add=True)
+    mimetype = models.TextField()
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
 
     @classmethod
-    def encrypt_content(cls, content):
+    def encrypt_content(cls, content, mimetype):
         # TODO: Introduce mimetypes.guess_type and store it in additional model field.
         encoded_content = base64.b64encode(content)
 
@@ -19,7 +20,7 @@ class Blob(models.Model):
         cipher_suite = fernet.Fernet(key)
         encrypted_content = cipher_suite.encrypt(encoded_content)
 
-        blob = cls(content=encrypted_content)
+        blob = cls(content=encrypted_content, mimetype=mimetype)
 
         return blob, key
 

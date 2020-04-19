@@ -1,18 +1,23 @@
 {% extends 'app/base.html' %} {% block content %} {% load crispy_forms_tags %}
-<form
-  action="{% url 'app:upload-file' %}"
-  method="post"
-  enctype="multipart/form-data"
->
-  {% csrf_token %}
-  <div class="row">
-    <div class="col-6">
-      {{ form.file|as_crispy_field }}
-    </div>
-    <div class="col-6">
-      {{ form.email|as_crispy_field }}
-    </div>
+<div class="card">
+  <div class="card-body">
+    <form
+      action="{% url 'app:upload-file' %}"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+
+      <div class="row">
+        <div class="col-6">
+          {{ form.file|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.email|as_crispy_field }}
+        </div>
+      </div>
+      <input type="submit" class="btn btn-success" value="Encrypt" />
+    </form>
   </div>
-  <input type="submit" class="btn btn-success" value="Encrypt" />
-</form>
+</div>
 {% endblock %}

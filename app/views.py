@@ -14,15 +14,17 @@ def download_file(request, blob_uuid):
     content = blob.decrypt_content(fernet_key=key)
     blob.delete()
 
-    # TODO: Get mimetype from Blob model
-    return HttpResponse(content, content_type="application/octet-stream")
+    return HttpResponse(content, content_type=blob.mimetype)
 
 
 def upload_file(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            blob, key = Blob.encrypt_content(content=form.cleaned_data["file"].read())
+            file = form.cleaned_data["file"]
+            blob, key = Blob.encrypt_content(
+                content=file.read(), mimetype=file.content_type
+            )
             blob.save()
 
             message = f"Decryption key is {key.decode('utf-8')}️"
