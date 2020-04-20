@@ -20,16 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # Security
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 SECRET_KEY = os.environ["SECRET_KEY"]
-SECURE_REFERRER_POLICY = "same-origin"
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
+# SECURE_REFERRER_POLICY = "same-origin"
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("IS_DEBUG", "true") == "true"
 
-ALLOWED_HOSTS = ["blobvault.pythonanywhere.com"]
+ALLOWED_HOSTS = ["blobvault.pythonanywhere.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
