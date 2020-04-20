@@ -54,11 +54,19 @@
               is decrypted, it will be purged from our databases.
             </p>
           </div>
-          {% if messages %} {% for message in messages %}
+          {% if messages %}
+          {% for message in messages %}
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+          <div class="alert alert-danger" role="alert">
+            {{ message }}
+          </div>
+          {% else %}
           <div class="alert alert-warning" role="alert">
             {{ message }}
           </div>
-          {% endfor %} {% endif %}
+          {% endif %}
+          {% endfor %}
+          {% endif %}
           <div label="content">
             {% block content %} {% endblock %}
           </div>

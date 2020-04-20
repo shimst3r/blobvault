@@ -29,3 +29,15 @@ class Blob(models.Model):
         decoded_content = base64.b64decode(decrypted_content)
 
         return decoded_content
+
+
+class Receipt(models.Model):
+    creation_date = models.DateTimeField(auto_now=True)
+    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
+
+    @classmethod
+    def daily_amount(cls, date):
+        """
+        Returns the number of receipts that have been issued on a given date.
+        """
+        return cls.objects.filter(creation_date__date=date).count()
