@@ -34,6 +34,8 @@ In addition, you have to export the following environment variables:
 If you have set up everything properly, run the app via
 
 ```shell
+python manage.py makemigrations
+python manage.py migrate
 python manage.py runserver
 ```
 
