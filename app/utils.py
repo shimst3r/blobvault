@@ -1,5 +1,12 @@
 from django.conf import settings
 from django.core import mail
+from django.utils import timezone
+
+from .models import Receipt
+
+
+def is_quota_reached():
+    return Receipt.daily_amount(date=timezone.now().date()) >= settings.EMAIL_QUOTA
 
 
 def send_email(email, url):
@@ -20,7 +27,7 @@ def _generate_email_message(url):
         f" stored at {url}. To decrypt it, you will receive a secret key"
         " via a different channel.\n\nYou can download the content only once, it will"
         " be deleted afterwards. To download the decrypted secret, open the above URL"
-        f" with the secret key appended, like {url}?key=$keyvalue.\n\n"
+        " with the secret key appended.\n\n"
         "Stay safe,\n"
         "Your Blob Vault Team"
     )

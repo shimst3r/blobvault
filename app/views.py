@@ -1,13 +1,13 @@
 from smtplib import SMTPException
 
 from django import http, urls
-from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render
+from django.utils import timezone
 
 from .forms import UploadFileForm
 from .models import Blob, Receipt
-from .utils import send_email
+from .utils import is_quota_reached, send_email
 
 
 def download_file(request, blob_uuid):
@@ -46,14 +46,13 @@ def upload_file(request):
             else:
                 # If the email has been sent successfully, issue a receipt to
                 # keep track of the daily SendGrid quota.
-                Receipt.objects.create()
+                Receipt.objects.create(creation_date=timezone.now())
 
             return http.HttpResponseRedirect(urls.reverse("app:upload-file"))
 
     else:
         form = UploadFileForm()
 
-    # TODO: Add circuit breaker if settings.EMAIL_LIMIT has been
-    # reached to avoid unexpected billings by comparing to
-    # Receipt.daily_amount(date=date.today())
-    return render(request, "app/upload.html", {"form": form})
+    return render(
+        request, "app/upload.html", {"form": form, "quota_reached": is_quota_reached()}
+    )

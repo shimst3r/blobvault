@@ -32,7 +32,7 @@ class Blob(models.Model):
 
 
 class Receipt(models.Model):
-    creation_date = models.DateTimeField(auto_now=True)
+    creation_date = models.DateTimeField()
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
 
     @classmethod

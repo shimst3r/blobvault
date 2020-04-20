@@ -19,13 +19,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "zz5c06qdbfue&jf^g8&h*df*8=dor%p1=*y$^(=j&q1e2**(nn"
+# Security
+CSRF_COOKIE_SECURE = True
+SECRET_KEY = os.environ["SECRET_KEY"]
+SECURE_REFERRER_POLICY = "same-origin"
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("IS_DEBUG", "true") == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["blobvault.pythonanywhere.com"]
 
 
 # Application definition
@@ -118,8 +122,11 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
+# Email via SendGrid
+# https://github.com/sklarsa/django-sendgrid-v5
+
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-EMAIL_LIMIT = 100
-EMAIL_SENDER = "blobvault@gmail.com"
+EMAIL_QUOTA = os.environ.get("EMAIL_QUOTA", 100)
+EMAIL_SENDER = os.environ["EMAIL_SENDER"]
 SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
 SENDGRID_SANDBOX_MODE_IN_DEBUG = False

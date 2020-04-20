@@ -1,5 +1,6 @@
 import uuid
 
+from django.utils import timezone
 from hypothesis import given
 from hypothesis.strategies import binary, datetimes
 from hypothesis.extra.django import TestCase
@@ -9,11 +10,9 @@ from .models import Blob, Receipt
 
 
 class BlobTestCase(TestCase):
-    def setUp(self):
-        self.blob = baker.make(Blob)
-
     def test_blob_primary_key_is_uuid(self):
-        self.assertIsInstance(self.blob.pk, uuid.UUID)
+        blob = baker.make(Blob)
+        self.assertIsInstance(blob.pk, uuid.UUID)
 
     @given(binary())
     def test_decrypt_encrypted_content(self, content):
@@ -27,15 +26,13 @@ class BlobTestCase(TestCase):
 
 
 class ReceiptTestCase(TestCase):
-    def setUp(self):
-        self.receipt = baker.make(Receipt)
-
     def test_receipt_primary_key_is_uuid(self):
-        self.assertIsInstance(self.receipt.pk, uuid.UUID)
+        receipt = baker.make(Receipt)
+        self.assertIsInstance(receipt.pk, uuid.UUID)
 
     @given(datetimes())
     def test_daily_amounts_of_receipts(self, datetime):
-        baker.make(Receipt, creation_date=datetime)
+        baker.make(Receipt, creation_date=timezone.make_aware(datetime))
 
         expected_daily_amount = 1
         actual_daily_amount = Receipt.daily_amount(date=datetime.date())

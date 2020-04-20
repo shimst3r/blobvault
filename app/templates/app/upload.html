@@ -1,6 +1,7 @@
 {% extends 'app/base.html' %} {% block content %} {% load crispy_forms_tags %}
 <div class="card">
   <div class="card-body">
+    {% if not quota_reached %}
     <form
       action="{% url 'app:upload-file' %}"
       method="post"
@@ -18,6 +19,11 @@
       </div>
       <input type="submit" class="btn btn-success" value="Encrypt" />
     </form>
+    {% else %}
+    <div class="alert alert-danger" role="alert">
+      The daily quota has been reached. In order to share a blob, please come back tomorrow.
+    </div
+    {% endif %}
   </div>
 </div>
 {% endblock %}
