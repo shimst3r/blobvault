@@ -8,7 +8,7 @@ Choose and upload almost any content you like, it will be automatically encrypte
 
 The file will be stored on disk and the corresponding download URL will be shared via the provided email address, using the [SendGrid](https://sendgrid.com) service. Inform the person you're sharing the file with, otherwise they might get confused about the onsolicited email.
 
-Make sure to copy the decryption key. It won't be stored on the servers. Once it's gone, it's gone. Apply the key by appending `?key=$keyvalue` to the download URL.
+Make sure to copy the decryption key. It won't be stored on the servers. Once it's gone, it's gone.
 
 **One last thing:** Each blob can be downloaded once and only once. After the content is decrypted, it will be purged from the database.
 
@@ -56,16 +56,14 @@ python manage.py test
 
 ## Code Quality and CI
 
-I try to stick to [black](https://black.readthedocs.io/en/stable/), [flake8](https://flake8.pycqa.org/en/latest/), and [mypy](https://mypy.readthedocs.io/en/stable/) where possible.
-
-At the moment, there is no CI set up (I'm sorry). Once I find the time, I will add GitHub Actions (I promise).
+I try to stick to [black](https://black.readthedocs.io/en/stable/), [flake8](https://flake8.pycqa.org/en/latest/), and [mypy](https://mypy.readthedocs.io/en/stable/) where possible. Code compliance is checked using GitHub Actions.
 
 ## License
 
 > Copyright 2020 Nils Müller <shimst3r@gmail.com>
-> 
+>
 > Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 >
->The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+> The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 >
->THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
