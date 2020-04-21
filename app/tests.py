@@ -1,4 +1,5 @@
 import uuid
+from datetime import timedelta
 
 from django.conf import settings
 from django.utils import timezone
@@ -13,6 +14,7 @@ from .models import Blob, Receipt
 class BlobTestCase(TestCase):
     def test_blob_primary_key_is_uuid(self):
         blob = baker.make(Blob)
+
         self.assertIsInstance(blob.pk, uuid.UUID)
 
     @given(binary())
@@ -29,6 +31,7 @@ class BlobTestCase(TestCase):
 class ReceiptTestCase(TestCase):
     def test_receipt_primary_key_is_uuid(self):
         receipt = baker.make(Receipt)
+
         self.assertIsInstance(receipt.pk, uuid.UUID)
 
     @given(datetimes(), integers(min_value=1, max_value=1000))
@@ -41,5 +44,17 @@ class ReceiptTestCase(TestCase):
 
         self.assertEqual(expected, actual)
 
+    @given(datetimes(), integers(min_value=1, max_value=10))
+    def test_daily_amount(self, datetime, quantity):
+        datetime = timezone.make_aware(datetime)
+        day_before = datetime - timedelta(days=1)
+        day_after = datetime + timedelta(days=1)
 
-# TODO: Add tests for download and upload views.
+        baker.make(Receipt, creation_date=day_before, _quantity=quantity)
+        baker.make(Receipt, creation_date=datetime, _quantity=quantity)
+        baker.make(Receipt, creation_date=day_after, _quantity=quantity)
+
+        expected_amount = quantity
+        actual_amount = Receipt._daily_amount(date=datetime.date())
+
+        self.assertEqual(expected_amount, actual_amount)
