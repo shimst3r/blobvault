@@ -1,8 +1,9 @@
 import uuid
 
+from django.conf import settings
 from django.utils import timezone
 from hypothesis import given
-from hypothesis.strategies import binary, datetimes
+from hypothesis.strategies import binary, datetimes, integers
 from hypothesis.extra.django import TestCase
 from model_bakery import baker
 
@@ -30,14 +31,16 @@ class ReceiptTestCase(TestCase):
         receipt = baker.make(Receipt)
         self.assertIsInstance(receipt.pk, uuid.UUID)
 
-    @given(datetimes())
-    def test_daily_amounts_of_receipts(self, datetime):
-        baker.make(Receipt, creation_date=timezone.make_aware(datetime))
+    @given(datetimes(), integers())
+    def test_is_quota_reached(self, datetime, quantity):
+        baker.make(
+            Receipt, creation_date=timezone.make_aware(datetime), _quantity=quantity
+        )
 
-        expected_daily_amount = 1
-        actual_daily_amount = Receipt.daily_amount(date=datetime.date())
+        expected = quantity >= settings.EMAIL_QUOTA
+        actual = Receipt.is_quota_reached(date=datetime.date())
 
-        self.assertEqual(expected_daily_amount, actual_daily_amount)
+        self.assertEqual(expected, actual)
 
 
 # TODO: Add tests for download and upload views.

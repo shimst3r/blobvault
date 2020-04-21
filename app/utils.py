@@ -1,12 +1,5 @@
 from django.conf import settings
 from django.core import mail
-from django.utils import timezone
-
-from .models import Receipt
-
-
-def is_quota_reached():
-    return Receipt.daily_amount(date=timezone.now().date()) >= int(settings.EMAIL_QUOTA)
 
 
 def send_email(email, url):

@@ -2,6 +2,7 @@ import base64
 import uuid
 
 from cryptography import fernet
+from django.conf import settings
 from django.db import models
 
 
@@ -36,7 +37,17 @@ class Receipt(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
 
     @classmethod
-    def daily_amount(cls, date):
+    def is_quota_reached(cls, date):
+        """
+        Returns `True` if the number of Receipts created on a given day exceeds
+        the daily email quota.
+
+        This is useful for preventing surprise bills from SendGrid.
+        """
+        return cls._daily_amount(date=date) >= int(settings.EMAIL_QUOTA)
+
+    @classmethod
+    def _daily_amount(cls, date):
         """
         Returns the number of receipts that have been issued on a given date.
         """

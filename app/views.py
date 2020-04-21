@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from .forms import UploadFileForm
 from .models import Blob, Receipt
-from .utils import is_quota_reached, send_email
+from .utils import send_email
 
 
 def download_file(request, blob_uuid):
@@ -53,6 +53,7 @@ def upload_file(request):
     else:
         form = UploadFileForm()
 
+    is_quota_reached = Receipt.is_quota_reached(date=timezone.now().date())
     return render(
-        request, "app/upload.html", {"form": form, "quota_reached": is_quota_reached()}
+        request, "app/upload.html", {"form": form, "quota_reached": is_quota_reached}
     )
