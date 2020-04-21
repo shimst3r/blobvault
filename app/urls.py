@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import download_file, upload_file
+from .views import DownloadView, UploadView
 
 app_name = "app"
 urlpatterns = [
-    path("<uuid:blob_uuid>", download_file, name="download-file"),
-    path("", upload_file, name="upload-file"),
+    path("<uuid:blob_uuid>", DownloadView.as_view(), name="download-file"),
+    path("", UploadView.as_view(), name="upload-file"),
 ]

@@ -22,14 +22,19 @@ class Blob(models.Model):
 
         blob = cls(content=encrypted_content, mimetype=mimetype)
 
-        return blob, key
+        return blob, key.decode("utf-8")
 
     def decrypt_content(self, fernet_key):
-        cipher_suite = fernet.Fernet(fernet_key)
-        decrypted_content = cipher_suite.decrypt(self.content)
-        decoded_content = base64.b64decode(decrypted_content)
-
-        return decoded_content
+        try:
+            cipher_suite = fernet.Fernet(fernet_key.encode())
+            decrypted_content = cipher_suite.decrypt(self.content)
+            decoded_content = base64.b64decode(decrypted_content)
+        except Exception:
+            # Use a catch-all `Exception` for easier error propagation. This is
+            # a deliberate decision and not best practice!
+            raise fernet.InvalidToken
+        else:
+            return decoded_content
 
 
 class Receipt(models.Model):

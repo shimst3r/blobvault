@@ -1,0 +1,20 @@
+{% extends 'app/base.html' %} {% block content %} {% load crispy_forms_tags %}
+<div class="card">
+  <div class="card-body">
+    <form
+      action="{% url 'app:download-file' blob_uuid=blob_uuid %}"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+
+      <div class="row">
+        <div class="col-6">
+          {{ form.decryption_key|as_crispy_field }}
+        </div>
+      </div>
+      <input type="submit" class="btn btn-success" value="Decrypt" />
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -17,10 +17,10 @@ def _generate_email_message(url):
     text = (
         "Dear stranger,\n\n"
         "Someone wants to share a secret with you! At the moment, it is securely"
-        f" stored at {url}. To decrypt it, you will receive a secret key"
+        f" stored at {url} . To decrypt it, you will receive a secret key"
         " via a different channel.\n\nYou can download the content only once, it will"
         " be deleted afterwards. To download the decrypted secret, open the above URL"
-        " with the secret key appended.\n\n"
+        " and enter the secret key.\n\n"
         "Stay safe,\n"
         "Your Blob Vault Team"
     )

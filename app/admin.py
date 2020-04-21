@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Blob, Receipt
+
+admin.site.register(Blob)
+admin.site.register(Receipt)
