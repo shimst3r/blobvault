@@ -6,11 +6,11 @@ Choose and upload almost any content you like, it will be automatically encrypte
 
 ## Description
 
-The file will be stored on disk and the corresponding download URL will be shared via the provided email address, using the [SendGrid](https://sendgrid.com) service.
+The file will be stored on disk and the corresponding download URL will be shared via the provided email address, using the [SendGrid](https://sendgrid.com) service. Inform the person you're sharing the file with, otherwise they might get confused about the onsolicited email.
 
-Make sure to copy the decryption key. It won't be stored on our servers. Once it's gone, it's gone. Apply the key by appending `?key=$keyvalue` to the download URL.
+Make sure to copy the decryption key. It won't be stored on the servers. Once it's gone, it's gone. Apply the key by appending `?key=$keyvalue` to the download URL.
 
-**One last thing:** Each blob can be downloaded once and only once. After the content is decrypted, it will be purged from our database.
+**One last thing:** Each blob can be downloaded once and only once. After the content is decrypted, it will be purged from the database.
 
 ## How to run
 
@@ -40,6 +40,8 @@ python manage.py runserver
 ```
 
 using Django's built-in development server. Don't use it in production though, use [gunicorn](https://gunicorn.org) or [waitress](https://docs.pylonsproject.org/projects/waitress/en/stable/) instead.
+
+Given that the encryption is server-side, the main usecase of `blobvault` is hosting it yourself in a trusted environment.
 
 ## How to test
 
