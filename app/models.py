@@ -7,10 +7,10 @@ from django.db import models
 
 
 class Blob(models.Model):
-    content = models.BinaryField()
-    creation_date = models.DateTimeField(auto_now_add=True)
-    mimetype = models.TextField()
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    id: models.UUIDField = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    content: models.BinaryField = models.BinaryField()
+    creation_date: models.DateTimeField = models.DateTimeField(auto_now_add=True)
+    mimetype: models.TextField = models.TextField()
 
     @classmethod
     def encrypt_content(cls, content, mimetype):
@@ -38,8 +38,8 @@ class Blob(models.Model):
 
 
 class Receipt(models.Model):
-    creation_date = models.DateTimeField()
-    uuid = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    id: models.UUIDField = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    creation_date: models.DateTimeField = models.DateTimeField()
 
     @classmethod
     def is_quota_reached(cls, date):

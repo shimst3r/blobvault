@@ -15,15 +15,13 @@ class DownloadView(views.View):
     form_class = DownloadFileForm
     template_name = "app/download.html"
 
-    def get(self, request, blob_uuid):
+    def get(self, request, blob_id):
         form = self.form_class()
 
-        return render(
-            request, self.template_name, {"form": form, "blob_uuid": blob_uuid}
-        )
+        return render(request, self.template_name, {"form": form, "blob_id": blob_id})
 
-    def post(self, request, blob_uuid):
-        blob = get_object_or_404(Blob, uuid=blob_uuid)
+    def post(self, request, blob_id):
+        blob = get_object_or_404(Blob, id=blob_id)
 
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -40,7 +38,7 @@ class DownloadView(views.View):
                 return http.HttpResponse(content, content_type=blob.mimetype)
 
         return http.HttpResponseRedirect(
-            urls.reverse("app:download-file", args=[blob_uuid])
+            urls.reverse("app:download-file", args=[blob_id])
         )
 
 

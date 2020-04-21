@@ -2,7 +2,7 @@
 <div class="card">
   <div class="card-body">
     <form
-      action="{% url 'app:download-file' blob_uuid=blob_uuid %}"
+      action="{% url 'app:download-file' blob_id=blob_id %}"
       method="post"
       enctype="multipart/form-data"
     >
