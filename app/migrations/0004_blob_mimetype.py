@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0003_remove_blob_url'),
+        ("app", "0003_remove_blob_url"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blob',
-            name='mimetype',
-            field=models.TextField(default='application/octet-stream'),
+            model_name="blob",
+            name="mimetype",
+            field=models.TextField(default="application/octet-stream"),
             preserve_default=False,
         ),
     ]

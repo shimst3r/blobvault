@@ -7,15 +7,20 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('app', '0004_blob_mimetype'),
+        ("app", "0004_blob_mimetype"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Receipt',
+            name="Receipt",
             fields=[
-                ('creation_date', models.DateField(auto_now=True)),
-                ('uuid', models.UUIDField(default=uuid.uuid4, primary_key=True, serialize=False)),
+                ("creation_date", models.DateField(auto_now=True)),
+                (
+                    "uuid",
+                    models.UUIDField(
+                        default=uuid.uuid4, primary_key=True, serialize=False
+                    ),
+                ),
             ],
         ),
     ]
