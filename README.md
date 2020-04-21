@@ -14,13 +14,13 @@ Make sure to copy the decryption key. It won't be stored on the servers. Once it
 
 ## How to run
 
-I will add a Dockerfile soon™. Until then, you have to run the application the old-fashioned way, using the `dev_requirements.txt`:
+I will add a Dockerfile soon™. Until then, you have to run the application the old-fashioned way, using the `requirements.txt` file:
 
 ```shell
 python3 -m venv venv --prompt blobvault
 source venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -r dev_requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 Because the app relies on [SendGrid](http://sendgrid.com), you have to get an account. You have to set up an email address for SendGrid and request an API token.
@@ -51,6 +51,7 @@ You can run the test suite via
 
 ```shell
 source venv/bin/activate
+python -m pip install -r dev_requirements.txt
 python manage.py test
 ```
 
