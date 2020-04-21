@@ -30,9 +30,9 @@ jobs:
       - name: Test with Django test
         run: |
           python manage.py test
-        env: |
+        env:
           EMAIL_QUOTA: 100
           EMAIL_SENDER: "blobvault@example.com"
           IS_DEBUG: "true"
           SECRET_KEY: "E.#{Kzy'aAA*eP'VZP'lUPRydPiHpWNY(ZLATFJX/$]Mxi*A-"
-          SENDGRID_API_KEY: "|kwZj{.~{utC@Px~%&pvjBaG|D"A(/UQ"]eV#AZN)dOXKe:S!m?]Q%Bc-@jAtj)KJii/E"
+          SENDGRID_API_KEY: "|kwZj{.~{utC@Px~%&pvjBaG|D!A(/UQo]eV#AZN)dOXKe:S!m?]Q%Bc-@jAtj)KJii/E"
