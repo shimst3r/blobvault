@@ -35,12 +35,12 @@ class ReceiptTestCase(TestCase):
         self.assertIsInstance(receipt.pk, uuid.UUID)
 
     @given(datetime=datetimes(), quantity=integers(min_value=1, max_value=200))
-    @example(datetime=datetime.now(), quantity=100)
+    @example(datetime=datetime.now(), quantity=settings.EMAIL_QUOTA)
     def test_is_quota_reached(self, datetime, quantity):
         datetime = timezone.make_aware(datetime)
         baker.make(Receipt, creation_date=datetime, _quantity=quantity)
 
-        expected = quantity >= int(settings.EMAIL_QUOTA)
+        expected = quantity >= settings.EMAIL_QUOTA
         actual = Receipt.is_quota_reached(date=datetime.date())
 
         self.assertEqual(expected, actual)
