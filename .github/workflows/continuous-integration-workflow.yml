@@ -31,6 +31,9 @@ jobs:
         run: |
           mypy app/
           mypy blob_vault/
+      - name: Check with Django check
+        run: |
+          python manage.py check
       - name: Test with Django test
         run: |
           python manage.py test

@@ -75,7 +75,7 @@ python manage.py test
 
 ## Code Quality and CI
 
-I try to stick to [black](https://black.readthedocs.io/en/stable/), [flake8](https://flake8.pycqa.org/en/latest/), and [mypy](https://mypy.readthedocs.io/en/stable/) where possible, with minimal configuration.
+I try to stick to [black](https://black.readthedocs.io/en/stable/), [Django check](https://docs.djangoproject.com/en/3.0/ref/django-admin/#check), [flake8](https://flake8.pycqa.org/en/latest/), and [mypy](https://mypy.readthedocs.io/en/stable/) where possible, with minimal configuration.
 
 Code compliance is checked using GitHub Actions.
 
