@@ -8,7 +8,12 @@ jobs:
     strategy:
       matrix:
         python-version: [3.7, 3.8]
-
+    env:
+      EMAIL_QUOTA: 100
+      EMAIL_SENDER: "blobvault@example.com"
+      IS_DEBUG: "true"
+      SECRET_KEY: "E.#{Kzy'aAA*eP'VZP'lUPRydPiHpWNY(ZLATFJX/$]Mxi*A-"
+      SENDGRID_API_KEY: "|kwZj{.~{utC@Px~%&pvjBaG|D!A(/UQo]eV#AZN)dOXKe:S!m?]Q%Bc-@jAtj)KJii/E"
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
@@ -37,9 +42,3 @@ jobs:
       - name: Test with Django test
         run: |
           python manage.py test
-        env:
-          EMAIL_QUOTA: 100
-          EMAIL_SENDER: "blobvault@example.com"
-          IS_DEBUG: "true"
-          SECRET_KEY: "E.#{Kzy'aAA*eP'VZP'lUPRydPiHpWNY(ZLATFJX/$]Mxi*A-"
-          SENDGRID_API_KEY: "|kwZj{.~{utC@Px~%&pvjBaG|D!A(/UQo]eV#AZN)dOXKe:S!m?]Q%Bc-@jAtj)KJii/E"
