@@ -128,4 +128,4 @@ EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 EMAIL_QUOTA = int(os.environ.get("EMAIL_QUOTA", 100))
 EMAIL_SENDER = os.environ["EMAIL_SENDER"]
 SENDGRID_API_KEY = os.environ["SENDGRID_API_KEY"]
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+SENDGRID_SANDBOX_MODE_IN_DEBUG = True
