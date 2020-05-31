@@ -2,12 +2,14 @@ import uuid
 from datetime import datetime, timedelta
 
 from django.conf import settings
+from django.urls import reverse
 from django.utils import timezone
 from hypothesis import example, given
 from hypothesis.strategies import binary, datetimes, integers
 from hypothesis.extra.django import TestCase
 from model_bakery import baker
 
+from .forms import DownloadFileForm, UploadFileForm
 from .models import Blob, Receipt
 
 
@@ -59,3 +61,63 @@ class ReceiptTestCase(TestCase):
         actual_amount = Receipt._daily_amount(date=datetime.date())
 
         self.assertEqual(expected_amount, actual_amount)
+
+
+class DownloadViewGetTestCase(TestCase):
+    def setUp(self):
+        self.blob = baker.make(Blob)
+
+    def test_response_contains_form(self):
+        url = reverse("app:download-file", args=(self.blob.pk,))
+        response = self.client.get(url)
+
+        self.assertIn("form", response.context)
+
+    def test_form_is_download_file_form(self):
+        url = reverse("app:download-file", args=(self.blob.pk,))
+        response = self.client.get(url)
+        form = response.context["form"]
+
+        self.assertIsInstance(form, DownloadFileForm)
+
+    def test_download_without_blob_pk_returns_404(self):
+        url = "/download"
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 404)
+
+
+class UploadViewGetTestCase(TestCase):
+    def test_response_contains_form(self):
+        url = reverse("app:upload-file")
+        response = self.client.get(url)
+
+        self.assertIn("form", response.context)
+
+    def test_form_is_upload_file_form(self):
+        url = reverse("app:upload-file")
+        response = self.client.get(url)
+        form = response.context["form"]
+
+        self.assertIsInstance(form, UploadFileForm)
+
+    def test_response_contains_err_if_quota_is_reached(self):
+        baker.make(
+            Receipt, _quantity=settings.EMAIL_QUOTA + 1, creation_date=timezone.now(),
+        )
+
+        url = reverse("app:upload-file")
+        response = self.client.get(url)
+        err = b"The daily quota has been reached"
+
+        self.assertIn(err, response.content)
+
+    def test_form_doesnt_render_if_quota_is_reached(self):
+        baker.make(
+            Receipt, _quantity=settings.EMAIL_QUOTA + 1, creation_date=timezone.now(),
+        )
+
+        url = reverse("app:upload-file")
+        response = self.client.get(url)
+
+        self.assertNotIn(b"form", response.content)
