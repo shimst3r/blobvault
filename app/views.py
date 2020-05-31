@@ -7,8 +7,8 @@ from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 
 from .forms import DownloadFileForm, UploadFileForm
+from .mail import send_email
 from .models import Blob, Receipt
-from .utils import send_email
 
 
 class DownloadView(views.View):
