@@ -33,7 +33,7 @@ ptyprocess==0.6.0
 pycodestyle==2.5.0
 pycparser==2.20
 pyflakes==2.1.1
-Pygments==2.6.1
+Pygments==2.7.4
 python-http-client==3.2.7
 pytz==2019.3
 regex==2020.4.4
